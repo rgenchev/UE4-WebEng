@@ -1,0 +1,24 @@
+<body data-decimal-separator="," data-grouping-separator=".">
+<div role="navigation" aria-label="jumplinks">
+  <a href="#devicesheadline" class="accessibility">Zum Inhalt springen</a>
+</div>
+
+<my-navigation></my-navigation>
+<div class="main-container">
+  <aside class="sidebar" aria-labelledby="serverinfoheadline">
+    <my-sidebar></my-sidebar>
+  </aside>
+  <main aria-labelledby="devicesheadline;">
+    <div class="headline-container">
+      <h2 class="main-headline" id="devicesheadline">Geräte</h2>
+      <a (click)="addDevice()"><img height="20" width="20" src="../../images/add.png" alt="Gerät hinzufügen"/></a>
+    </div>
+    <my-devices></my-devices>
+    <my-overlay [overviewComponent]="this" [hidden]="isAddDevice ? null : true"></my-overlay>
+  </main>
+</div>
+
+<footer>
+  © 2017 BIG Smart Home
+</footer>
+</body>

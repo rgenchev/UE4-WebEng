@@ -1,0 +1,23 @@
+<div class="server-info-container">
+  <h2 class="accessibility" id="serverinfoheadline">Serverstatus</h2>
+  <dl class="server-data properties">
+    <dt class="accessibility">Serverstatus:</dt>
+    <dd class="server-status">Serverstatus:</dd>
+    <dt>Benutzer</dt>
+    <dd>
+      <span class="system-start-time">Administrator</span>
+    </dd>
+    <dt>Systemstartzeit</dt>
+    <dd>
+      <span class="system-start-time">{{accessService.server_start | date: 'shortTime'}}</span>
+    </dd>
+    <dt>Systemstartdatum</dt>
+    <dd>
+      <span class="system-start-datum">{{accessService.server_start  | date: 'shortDate'}}</span>
+    </dd>
+    <dt>Fehlgeschlagene Logins</dt>
+    <dd>
+      <span class="failed-logins">{{accessService.failed_logins}}</span>
+    </dd>
+  </dl>
+</div>

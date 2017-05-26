@@ -1,0 +1,28 @@
+<body data-decimal-separator="," data-grouping-separator=".">
+<div role="navigation">
+    <a href="#devicessheadline" class="accessibility">Zum Inhalt springen</a>
+</div>
+
+<my-navigation></my-navigation>
+<div class="main-container">
+    <aside class="sidebar" aria-labelledby="serverinfoheadline">
+        <my-sidebar></my-sidebar>
+    </aside>
+    <main *ngIf="device" aria-labelledby="deviceheadline" class="details-container">
+
+        <div [attr.data-device-id]="device.id" class="details-headline">
+            <h2 class="main-headline" id="deviceheadline">{{device.display_name}}</h2>
+        </div>
+        <div class="details-holder" *ngFor="let control_unit of device.control_units">
+            <div *ngFor="let control_unit of device.control_units"  class="details-outer">
+                <continuous-details *ngIf="isContinuous(control_unit)" [device]="device" [controlUnit]="control_unit"></continuous-details>
+                <enum-details *ngIf="isEnum(control_unit)" [device]="device" [controlUnit]="control_unit"></enum-details>
+                <boolean-details *ngIf="isBoolean(control_unit)"  [device]="device" [controlUnit]="control_unit"></boolean-details>
+            </div>
+        </div>
+    </main>
+</div>
+<footer>
+    © 2017 BIG Smart Home
+</footer>
+</body>

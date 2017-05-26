@@ -1,0 +1,26 @@
+<header aria-labelledby="bannerheadline">
+  <!--<a [routerLink]="['/overview']"><img class="title-image" src="images/big-logo-small.png" alt="BIG Bid logo"></a>-->
+  <a [routerLink]="isLoginSite() ? ['/login'] : ['/overview']"><img class="title-image" src="images/big-logo-small.png"
+                                                                    alt="BIG Bid logo"></a>
+  <h1 class="header-title" id="bannerheadline">
+    BIG Smart Home
+  </h1>
+  <nav aria-labelledby="navigationheadline">
+    <h2 class="accessibility" id="navigationheadline">Navigation</h2>
+    <ul class="navigation-list">
+      <li class="nav-items">
+        <ul>
+          <li *ngIf="isOptionsShown()">
+            <a [routerLink]="['/options']" class="button" accesskey="2">Optionen</a>
+          </li>
+          <li *ngIf="isLogoutShown()">
+            <a (click)="doLogout()" class="button" accesskey="1">Abmelden</a>
+          </li>
+        </ul>
+      </li>
+      <li class="overflow-icon">
+        <a href="#" class="button" accesskey="1">☰</a>
+      </li>
+    </ul>
+  </nav>
+</header>

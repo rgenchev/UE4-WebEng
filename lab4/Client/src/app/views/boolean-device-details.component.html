@@ -1,0 +1,30 @@
+<div class="details-image-container">
+    <canvas alt="Donatdiagramm für das Gerät" class="details-image" baseChart
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"
+            [legend]="doughnutChartLegend"
+            [options]="doughnutChartOptions">
+    </canvas>
+</div>
+<div class="details-data">
+    <label class="accessibility" for="details-log">Letzte Werteänderungen</label>
+    <textarea id="details-log" class="detail-logs" [(ngModel)]="controlUnit.log" placeholder="Gerätelog" readonly rows="6"></textarea>
+    <div class="details-settings">
+        <h3 class="details-headline">{{controlUnit.name}}</h3>
+
+        <form class="update-form" method="post" #updateForm="ngForm" (ngSubmit)="onSubmit()">
+
+            <label class="update-form-field" id="current-value">
+                <span class="current-value">derzeit: {{controlUnit.current==0 ? "Deaktiviert" : "Aktiviert"}}</span>
+            </label>
+
+            <label class="accessibility" for="new-value">Bitte gewünschten Wert auswählen.</label>
+            <input type="checkbox" id="new-value" [checked]="new_value==0 ? null: true" [(ngModel)]="new_value"
+                   class="update-checkbox-input form-input"
+                   name="new-value">
+            <input type="submit" id="submit-value" class="update-form-field button" name="submit-value"
+                   value="Wert setzen">
+        </form>
+    </div>
+</div>

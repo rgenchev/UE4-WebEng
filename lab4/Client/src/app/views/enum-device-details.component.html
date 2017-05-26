@@ -1,0 +1,30 @@
+<div class="details-image-container">
+  <canvas alt="Polardiagramm für das Gerät" class="details-image" baseChart
+          [data]="polarChartData"
+          [labels]="polarChartLabels"
+          [chartType]="polarChartType"
+          [legend]="polarChartLegend"
+          [options]="polarChartOptions">
+  </canvas>
+</div>
+<div class="details-data">
+  <label class="accessibility" for="details-log">Letzte Werteänderungen</label>
+  <textarea id="details-log" class="detail-logs" [(ngModel)]="controlUnit.log" placeholder="Gerätelog" readonly rows="6"></textarea>
+  <div class="details-settings">
+    <h3 class="details-headline">{{controlUnit.name}}</h3>
+
+    <form class="update-form" method="post" #updateForm="ngForm" (ngSubmit)="onSubmit()">
+
+      <label class="update-form-field" id="current-value">
+        <span class="current-value">derzeit: {{controlUnit.values[controlUnit.current]}}</span>
+      </label>
+
+      <label class="accessibility" for="new-value">Bitte gewünschten Wert aus Menü auswählen.</label>
+      <select id="new-value" class="update-form-field form-input" name="new-value" [(ngModel)]="new_value" required>
+       <option [value]="val" [selected]="isSelected(val) ? true: null"  *ngFor="let val of controlUnit.values">{{val}}</option>
+      </select>
+      <input type="submit" id="submit-value" class="update-form-field button" name="submit-value"
+             value="Wert setzen">
+    </form>
+  </div>
+</div>

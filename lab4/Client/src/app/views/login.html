@@ -1,0 +1,35 @@
+<body data-decimal-separator="," data-grouping-separator=".">
+
+<div role="navigation" aria-label="jumplinks">
+  <a href="#formheadline" class="accessibility">Zum Inhalt springen</a>
+</div>
+
+<my-navigation></my-navigation>
+<div class="main-container">
+  <main aria-labelledby="formheadline">
+    <form class="form" method="post" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <h2 id="formheadline" class="registration-headline">Anmelden</h2>
+      <div class="form-row">
+        <label class="form-label" for="username-input">
+          Benutzername
+        </label>
+        <input type="text" name="username" id="username-input" required class="form-input" ngModel>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="password-input">
+          Passwort
+        </label>
+        <input type="password" name="password" id="password-input" required class="form-input" minlength="4"
+               maxlength="12" ngModel>
+      </div>
+      <div *ngIf="loginError" class="form-row form-row-center form-error" id="login-error">Benutzername oder Passwort nicht korrekt!</div>
+      <div class="form-row form-row-center">
+        <input type="submit" class="button button-submit" value="Anmelden"/>
+      </div>
+    </form>
+  </main>
+</div>
+<footer>
+  © 2017 BIG Smart Home
+</footer>
+</body>

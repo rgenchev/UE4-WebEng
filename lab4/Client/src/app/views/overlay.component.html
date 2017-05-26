@@ -1,0 +1,74 @@
+<div class="overlay">
+  <div class="overlay-content">
+    <a (click)="doClose()" class="overlay-exit"><img  src="images/close.png" alt="close overlay" width="10" height="10"/></a>
+    <form name="addForm" class="form overlay-form" method="post" #addForm="ngForm" (ngSubmit)="onSubmit(addForm)">
+      <h2 id="formheadline" class="create-headline">Gerät anlegen</h2>
+      <div class="form-row">
+        <label class="form-label" for="displayname-input">
+          Anzeigename
+        </label>
+        <input type="text" name="displayname" id="displayname-input" required class="form-input" ngModel>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="type-input">
+          Gerätetyp
+        </label>
+
+        <select [(ngModel)]="selected_type" name="type-input" class="form-input" required id="type-input">
+          <option [value]="val"  *ngFor="let val of device_types">{{val}}</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="typename-input">
+          Typenbezeichnung
+        </label>
+        <input type="text" name="typename" id="typename-input" required class="form-input" ngModel>
+      </div>
+      <hr>
+      <div class="form-row">
+        <label class="form-label" >
+          <b>Steuerungselement</b>
+        </label>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="elementname-input">
+          Bezeichnung
+        </label>
+        <input type="text" name="elementname" id="elementname-input" required class="form-input" ngModel>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="elementtype-input">
+          Typ
+        </label>
+        <select name="elementtype-input" class="form-input" [(ngModel)]="controlUnitType_selected" required id="elementtype-input">
+          <option [value]="val"  *ngFor="let val of controlUnit_types">{{val}}</option>
+        </select>
+      </div>
+      <div *ngIf="isContinuousSelected()" class="form-row">
+        <label class="form-label" for="minimum-input">
+          Minimum
+        </label>
+        <input type="number" name="minimum-value" id="minimum-input" required class="form-input" ngModel>
+      </div>
+      <div *ngIf="isContinuousSelected()" class="form-row">
+        <label class="form-label" for="maximum-input">
+          Maximum
+        </label>
+        <input type="number" name="maximum-value" id="maximum-input" required class="form-input" ngModel>
+      </div>
+      <div *ngIf="isEnumSelected()" class="form-row">
+        <label class="form-label" for="values-input">
+          Mögliche Werte
+        </label>
+        <textarea name="discrete-values" ngModel id="values-input" required class="form-input" placeholder="offen, halb geöffnet, geschlossen"></textarea>
+      </div>
+      <div *ngIf="addError" class="form-row form-row-center form-error" id="add-error">Es wurden nicht alle Angaben wie benötigt vorgenommen!</div>
+      <div *ngIf="createError" class="form-row form-row-center form-error" id="create-error">Aufgrund eine Serverfehlers konnte das Geräte nicht erstellt werden!</div>
+      <div class="form-row form-row-center form-row-bottom">
+        <button [disabled]="!addForm.form.valid" class="button button-submit">
+          Gerät hinzufügen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

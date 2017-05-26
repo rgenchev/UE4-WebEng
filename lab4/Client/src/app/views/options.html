@@ -1,0 +1,45 @@
+<div role="navigation" aria-label="jumplinks">
+  <a href="#formheadline" class="accessibility">Zum Inhalt springen</a>
+</div>
+
+<my-navigation></my-navigation>
+<div class="main-container">
+  <main aria-labelledby="formheadline">
+    <form class="form" method="post" #optionsForm="ngForm" (ngSubmit)="onSubmit(optionsForm)">
+      <h2 id="formheadline" class="options-headline">Passwort ändern</h2>
+      <div class="form-row">
+        <label class="form-label" for="old-password-input">
+          Altes Passwort
+        </label>
+        <input type="password" name="old-password" id="old-password-input" required class="form-input"
+               placeholder="Altes Passwort" ngModel>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="new-password-input">
+          Neues Passwort
+        </label>
+        <input type="password" name="new-password" id="new-password-input" placeholder="Neues Passwort" required
+               class="form-input" minlength="8"
+               maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}" ngModel>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="repeat-password-input">
+          Passwort wiederholen
+        </label>
+        <input type="password" name="repeat-password" id="repeat-password-input"
+               placeholder="Neues Passwort wiederholen"
+               required class="form-input" minlength="8"
+               maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}" ngModel>
+      </div>
+      <div *ngIf="updateError" class="form-row form-row-center form-error" id="update-error">{{error_message}}</div>
+      <div class="form-row form-row-center">
+        <input [disabled]="!(equalsPW(optionsForm) && optionsForm.form.valid)" type="submit" id="save-changes-button"
+               class="button button-submit"
+               value=" Änderung speichern"/>
+      </div>
+    </form>
+  </main>
+</div>
+<footer>
+  © 2017 BIG Smart Home
+</footer>

@@ -1,0 +1,36 @@
+<div class="devices">
+
+  <div *ngFor="let device of devices" class="device-outer" [attr.data-device-id]="device.id">
+    <a class="device" [routerLink]="isEdited(device) ? null : ['/details', device.id]"
+       [attr.title]="device.description">
+      <dl class="device-properties">
+        <dt>Anzeigename</dt>
+        <dd *ngIf="!isEdited(device)" class="device-displayname">{{device.display_name}}</dd>
+        <dd *ngIf="isEdited(device)" class="device-displayname">
+          <input id="device_displayname_input" (keyup.enter)="finishEdit(device)" [(ngModel)]="device.display_name"
+                 value='" + text + "'/>
+        </dd>
+        <dt>Gerätetyp</dt>
+        <dd class="device-type">{{device.type}}</dd>
+        <dt>Gerätename</dt>
+        <dd class="device-name">{{device.type_name}}</dd>
+      </dl>
+      <div class="device-image-container">
+        <svg width="100%" height="100%" class="device-image"></svg>
+      </div>
+    </a>
+    <ul class="device-actions">
+      <li>
+        <a (click)="editDevice(device)">
+          <img class="device-edit" src="images/edit.png" alt="Gerät bearbeiten">
+        </a>
+      </li>
+      <li>
+        <a (click)="isEdited(device) ? finishEdit(device): removeDevice(device)">
+          <img class="device-remove" src="images/remove.png" alt="Gerät entfernen">
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</div>

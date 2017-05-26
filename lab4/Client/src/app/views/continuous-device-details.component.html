@@ -1,0 +1,30 @@
+<div class="details-image-container">
+  <canvas alt="Liniendiagramm für das Gerät" class="details-image" baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType">
+  </canvas>
+</div>
+<div class="details-data">
+  <label class="accessibility" for="details-log">Letzte Werteänderungen</label>
+  <textarea id="details-log" class="detail-logs" [(ngModel)]="controlUnit.log" placeholder="Gerätelog" readonly rows="6"></textarea>
+  <div class="details-settings">
+    <h3 class="details-headline">{{controlUnit.name}}</h3>
+
+    <form class="update-form" #updateForm="ngForm" method="post" (ngSubmit)="onSubmit()" >
+
+      <label class="update-form-field" id="current-value">
+        <span class="current-value">derzeit: {{controlUnit.current}}</span>
+      </label>
+
+      <label class="accessibility" for="new-value">Bitte gewünschten Wert eingeben.</label>
+      <input type="number" step="0.01" [min]="controlUnit.min" [max]="controlUnit.max" id="new-value" [value]="new_value" [(ngModel)]="new_value"
+             class="update-form-field form-input" name="new-value" required >
+      <input [disabled]="!updateForm.form.valid" type="submit" id="submit-value" class="update-form-field button" name="submit-value"
+             value="Wert setzen">
+    </form>
+  </div>
+</div>
