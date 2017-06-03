@@ -573,7 +573,12 @@ function getTwitterPublicationString(groupNum, uuid, date) {
  * Erzeugt einen http Server auf Port 8081 und stellt die REST-Schnittstelle zur Verfügung
  * @type {http.Server}
  */
-var server = app.listen(8081, function () {
+
+var server = https.createServer({
+    key: fs.readFileSync('./resources/certificates/key.pem'),
+    cert: fs.readFileSync('./resources/certificates/cert.pem'),
+    passphrase: 'passPhraseLol123'
+},app).listen(8081, function () {
 
     "use strict";
     readUser();
@@ -585,4 +590,3 @@ var server = app.listen(8081, function () {
     console.log("Big Smart Home Server listening at http://%s:%s", host, port);
 
 });
-

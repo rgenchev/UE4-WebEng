@@ -24,10 +24,10 @@ export class DeviceService {
 
   //TODO Passen Sie die URLs zu Ihrer REST-Schnittstelle, entsprechend der von Ihnen vorgenommenen Änderungen am Server, an
 
-  private listDevicesURL = 'http://localhost:8081/listDevices';
-  private updateDeviceURL = 'http://localhost:8081/updateDevice';
-  private deleteDeviceURL = 'http://localhost:8081/deleteDevice';
-  private createDeviceURL = 'http://localhost:8081/createDevice';
+  private listDevicesURL = 'https://localhost:8081/listDevices';
+  private updateDeviceURL = 'https://localhost:8081/updateDevice';
+  private deleteDeviceURL = 'https://localhost:8081/deleteDevice';
+  private createDeviceURL = 'https://localhost:8081/createDevice';
 
   private connection: WebSocket = null;
 
@@ -106,7 +106,7 @@ export class DeviceService {
     request.onreadystatechange = this.stateChanged;
     request["controlUnit"] = controlUnit;
 
-    request.open("POST", "http://localhost:8081/updateCurrent", true);
+    request.open("POST", "https://localhost:8081/updateCurrent", true);
 
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.setRequestHeader("access-token", this.accessService.getToken());
