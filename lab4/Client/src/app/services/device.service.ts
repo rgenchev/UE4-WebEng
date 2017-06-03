@@ -106,7 +106,7 @@ export class DeviceService {
     request.onreadystatechange = this.stateChanged;
     request["controlUnit"] = controlUnit;
 
-    request.open("POST", "http://localhost:8081/updateCurrent", true);
+    request.open("POST", "https://localhost:8081/updateCurrent", true);
 
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.setRequestHeader("access-token", this.accessService.getToken());
