@@ -587,6 +587,6 @@ var server = https.createServer({
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log("Big Smart Home Server listening at http://%s:%s", host, port);
+    console.log("Big Smart Home Server listening at https://%s:%s", host, port);
 
 });

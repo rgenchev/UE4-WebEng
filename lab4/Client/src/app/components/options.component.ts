@@ -13,7 +13,7 @@ export class OptionsComponent implements OnInit {
 
   updateError: boolean;
   error_message: string;
-  updatePasswordURL = "http://localhost:8081/updatePW";
+  updatePasswordURL = "https://localhost:8081/updatePW";
 
   constructor(private accessService: AccessService, private http: Http) {
   };
