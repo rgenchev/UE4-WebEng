@@ -78,6 +78,13 @@ app.post("/createDevice", function (req, res) {
                 //  - die benötigte Bibliothek ist bereits eingebunden
                 //  - siehe https://www.npmjs.com/package/twitter für eine Beschreibung der Bibliothek
                 //  - verwenden Sie getTwitterPublicationString(groupNum, uuid, date) um den Publication String zu erstellen
+                twit.post('statuses/update', {status: getTwitterPublicationString(45,uuid.v4(),Date.now())},function (error,tweets,response) {
+                    if(!error){
+                        console.log(JSON.stringify(tweets));
+                    } else {
+                        console.log(JSON.stringify(error));
+                    }
+                });
             }
         });
     } else {
@@ -192,6 +199,7 @@ app.post("/updateCurrent", function (req, res) {
  */
 app.post("/deleteDevice", function (req, res) {
     "use strict";
+
     if (typeof  req === "undefined" || typeof req.body === "undefined" || typeof req.body.id === "undefined") {
         res.json({status: 422, message: "Unprocessable entity"});
         return;
@@ -602,4 +610,11 @@ var httpserver = http.createServer(app).listen(8082,function () {
 
     console.log("Big Smart Home Server listening at http://%s:%s", host, port);
 
+});
+
+var twit = new twitter({
+    consumer_key: 'GZ6tiy1XyB9W0P4xEJudQ',
+    consumer_secret: 'gaJDlW0vf7en46JwHAOkZsTHvtAiZ3QUd2mD1x26J9w',
+    access_token_key: '1366513208-MutXEbBMAVOwrbFmZtj1r4Ih2vcoHGHE2207002',
+    access_token_secret: 'RMPWOePlus3xtURWRVnv1TgrjTyK7Zk33evp4KKyA'
 });
