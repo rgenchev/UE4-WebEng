@@ -5,6 +5,7 @@ import {DeviceService} from "../services/device.service";
 import {Device} from "../model/device";
 import {ControlUnit} from "../model/controlUnit";
 import {ControlType} from "../model/controlType";
+import {Http} from "@angular/http";
 
 @Component({
   selector: 'my-overlay',
@@ -23,7 +24,9 @@ export class OverlayComponent implements OnInit {
   addError: boolean = false;
   createError: boolean = false;
 
-  constructor(private deviceService: DeviceService) {
+  queryDevice_thumbnails:any;
+
+  constructor(private deviceService: DeviceService, private http: Http) {
   }
 
 
@@ -31,10 +34,11 @@ export class OverlayComponent implements OnInit {
    * Wird beim Start dieser Componente aufgerufen
    */
   ngOnInit(): void {
-    this.device_types = ["Beleuchtung", "Heizkörperthermostat", "Rollladen", "Überwachungskamera", "Webcam"]
+    this.device_types = ["Beleuchtung", "Heizkörperthermostat", "Rollladen", "Überwachungskamera", "Webcam"];
     this.controlUnit_types = ["Ein/Auschalter", "Diskrete Werte", "Kontinuierlicher Wert"];
     this.selected_type = this.device_types[0];
     this.controlUnitType_selected = this.controlUnit_types[0];
+    this.queryDevice_thumbnails = [];
     this.getSPARQLTypes();
   }
 
@@ -101,6 +105,14 @@ export class OverlayComponent implements OnInit {
         device.description = "Genauere Informationen zu dieser Webcam";
         break;
       default:
+        let temp = this.device_types.slice(5);
+
+        for(let a of temp){
+          if(this.selected_type == a){
+            device.image = this.queryDevice_thumbnails[temp.indexOf(a)];
+            device.description = "Genauere Informationen zu dieser/diesem " + a;
+          }
+        }
         //TODO Lesen Sie die SPARQL - Informationen aus dem SessionStorage und speichern Sie die entsprechenden Informationen zum Gerät
         break;
     }
@@ -163,6 +175,17 @@ export class OverlayComponent implements OnInit {
 
   getSPARQLTypes(): void {
     //TODO Lesen Sie mittels SPARQL die gewünschten Daten (wie in der Angabe beschrieben) aus und speichern Sie diese im SessionStorage
+    this.http.get(this.queryString).toPromise().then(res =>{
+        res = res.json().results;
+        localStorage.setItem('Spargel',JSON.stringify(res));
+        }
+    );
+
+    let queryData = JSON.parse(localStorage.getItem('Spargel')).bindings;
+    for(let a of queryData){
+      this.device_types.push(a.label.value);
+      this.queryDevice_thumbnails.push(a.thumbnail.value);
+    }
   }
 
 
@@ -199,4 +222,6 @@ export class OverlayComponent implements OnInit {
     return this.controlUnitType_selected === this.controlUnit_types[2];
   }
 
+
+  queryString: string = 'https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+cat%3A++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FCategory%3A%3E%0D%0A%0D%0Aselect+distinct+%0D%0A%3Flabel+%3Fthumbnail%0D%0AWHERE+%7B%0D%0A%3Fa+dct%3Asubject+cat%3AHome_automation.%0D%0A%3Fa+rdf%3Atype+owl%3AThing.%0D%0A%3Fb+dbo%3Aproduct+%3Fa.%0D%0A%3Fa+rdfs%3Alabel+%3Flabel.%0D%0A%3Fa+dbo%3Athumbnail+%3Fthumbnail.%0D%0AFILTER%28lang%28%3Flabel%29+%3D+%27de%27%29%0D%0A%7D&format=application%2Fsparql-results%2Bjson&CXML_redir_for_subjs=121&CXML_redir_for_hrefs=&timeout=30000&debug=on';
 }
