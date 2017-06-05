@@ -25,6 +25,7 @@ export class OverlayComponent implements OnInit {
   createError: boolean = false;
 
   queryDevice_thumbnails:any;
+  queryDevice_comments:any;
 
   constructor(private deviceService: DeviceService, private http: Http) {
   }
@@ -39,6 +40,7 @@ export class OverlayComponent implements OnInit {
     this.selected_type = this.device_types[0];
     this.controlUnitType_selected = this.controlUnit_types[0];
     this.queryDevice_thumbnails = [];
+    this.queryDevice_comments = [];
     this.getSPARQLTypes();
   }
 
@@ -110,6 +112,7 @@ export class OverlayComponent implements OnInit {
         for(let a of temp){
           if(this.selected_type == a){
             device.image = this.queryDevice_thumbnails[temp.indexOf(a)];
+            device.image_alt = this.queryDevice_comments[temp.indexOf(a)];
             device.description = "Genauere Informationen zu dieser/diesem " + a;
           }
         }
@@ -185,6 +188,7 @@ export class OverlayComponent implements OnInit {
     for(let a of queryData){
       this.device_types.push(a.label.value);
       this.queryDevice_thumbnails.push(a.thumbnail.value);
+      this.queryDevice_comments.push(a.comment.value);
     }
   }
 
@@ -223,5 +227,5 @@ export class OverlayComponent implements OnInit {
   }
 
 
-  queryString: string = 'https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+cat%3A++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FCategory%3A%3E%0D%0A%0D%0Aselect+distinct+%0D%0A%3Flabel+%3Fthumbnail%0D%0AWHERE+%7B%0D%0A%3Fa+dct%3Asubject+cat%3AHome_automation.%0D%0A%3Fa+rdf%3Atype+owl%3AThing.%0D%0A%3Fb+dbo%3Aproduct+%3Fa.%0D%0A%3Fa+rdfs%3Alabel+%3Flabel.%0D%0A%3Fa+dbo%3Athumbnail+%3Fthumbnail.%0D%0AFILTER%28lang%28%3Flabel%29+%3D+%27de%27%29%0D%0A%7D&format=application%2Fsparql-results%2Bjson&CXML_redir_for_subjs=121&CXML_redir_for_hrefs=&timeout=30000&debug=on';
+  queryString: string = 'https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+cat%3A++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FCategory%3A%3E%0D%0A%0D%0Aselect+distinct+%0D%0A%3Flabel+%3Fthumbnail+%3Fcomment%0D%0AWHERE+%7B%0D%0A%3Fa+dct%3Asubject+cat%3AHome_automation.%0D%0A%3Fa+rdf%3Atype+owl%3AThing.%0D%0A%3Fb+dbo%3Aproduct+%3Fa.%0D%0A%3Fa+rdfs%3Alabel+%3Flabel.%0D%0A%3Fa+rdfs%3Acomment+%3Fcomment.%0D%0A%3Fa+dbo%3Athumbnail+%3Fthumbnail.%0D%0AFILTER%28lang%28%3Flabel%29+%3D+%27de%27%29%0D%0AFILTER%28lang%28%3Fcomment%29+%3D+%27de%27%29%0D%0A%7D%0D%0AGROUP+BY+%3Fa&format=application%2Fsparql-results%2Bjson&CXML_redir_for_subjs=121&CXML_redir_for_hrefs=&timeout=30000&debug=on';
 }

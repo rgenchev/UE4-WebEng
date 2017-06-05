@@ -156,7 +156,7 @@ export class DeviceService {
       return;
     }
 
-    this.connection = new WebSocket("ws://localhost:8082/subscribe");
+    this.connection = new WebSocket("ws://localhost:8081/subscribe");
 
     var token = this.accessService.getToken();
     this.connection.onopen = function (event) {
